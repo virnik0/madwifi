@@ -48,19 +48,12 @@ endif
 PROGRAMS = athstats 80211stats athkey athchans athctrl \
 	athdebug 80211debug wlanconfig wpakey
 
-SUBDIRS = ath_info
-
 INCS = -I. -I$(HAL) -I$(TOP)
 CFLAGS = -g -O2 -Wall
 ALL_CFLAGS = $(CFLAGS) $(INCS)
 LDFLAGS =
 
-all: all-subdirs $(PROGRAMS)
-
-all-subdirs:
-	for d in $(SUBDIRS); do \
-		$(MAKE) -C $$d || exit 1; \
-	done
+all: $(PROGRAMS)
 
 athstats: athstats.c
 	$(CC) -o athstats $(ALL_CFLAGS) -I$(TOP)/ath $(LDFLAGS) athstats.c
@@ -90,9 +83,6 @@ install: all
 	install -d $(DESTDIR)$(MANDIR)/man8
 	install -m 0644 man/*.8 $(DESTDIR)$(MANDIR)/man8
 	install $(TOP)/scripts/madwifi-unload $(DESTDIR)$(BINDIR)/madwifi-unload
-	for d in $(SUBDIRS); do \
-		$(MAKE) -C $$d install || exit 1; \
-	done
 
 uninstall:
 	for i in $(PROGRAMS); do \
@@ -101,14 +91,8 @@ uninstall:
 	for i in $(PROGRAMS:=.8); do \
 		rm -f $(DESTDIR)$(MANDIR)/man8/$$i; \
 	done
-	for d in $(SUBDIRS); do \
-		$(MAKE) -C $$d uninstall || exit 1; \
-	done
 
 clean:
 	rm -f $(PROGRAMS) core a.out
-	for d in $(SUBDIRS); do \
-		$(MAKE) -C $$d clean; \
-	done
 
-.PHONY: all all-subdirs clean install uninstall
+.PHONY: all clean install uninstall
