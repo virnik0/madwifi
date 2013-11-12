@@ -359,20 +359,6 @@ static struct notifier_block ath_event_block = {
 	.notifier_call = ath_rcv_dev_event
 };
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,5,52))
-MODULE_PARM(beacon_cal, "i");
-MODULE_PARM(countrycode, "i");
-MODULE_PARM(maxvaps, "i");
-MODULE_PARM(outdoor, "i");
-MODULE_PARM(xchanmode, "i");
-MODULE_PARM(rfkill, "i");
-#ifdef ATH_CAP_TPC
-MODULE_PARM(hal_tpc, "i");
-#endif
-MODULE_PARM(autocreate, "s");
-MODULE_PARM(ratectl, "s");
-MODULE_PARM(intmit, "i");
-#else
 #include <linux/moduleparam.h>
 module_param(beacon_cal, int, 0600);
 module_param(countrycode, int, 0600);
@@ -386,7 +372,6 @@ module_param(hal_tpc, int, 0600);
 module_param(autocreate, charp, 0600);
 module_param(ratectl, charp, 0600);
 module_param(intmit, int, 0600);
-#endif
 MODULE_PARM_DESC(countrycode, "Override default country code.  Default is 0.");
 MODULE_PARM_DESC(maxvaps, "Maximum VAPs.  Default is 4.");
 MODULE_PARM_DESC(outdoor, "Enable/disable outdoor use.  Default is 0.");
@@ -405,11 +390,7 @@ MODULE_PARM_DESC(intmit, "Enable interference mitigation by default.  Default is
 
 static int	ath_debug = 0;
 #ifdef AR_DEBUG
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,5,52))
-MODULE_PARM(ath_debug, "i");
-#else
 module_param(ath_debug, int, 0600);
-#endif
 MODULE_PARM_DESC(ath_debug, "Load-time driver debug output enable");
 static void ath_printrxbuf(const struct ath_buf *, int);
 static void ath_printtxbuf(const struct ath_buf *, int);
@@ -417,11 +398,7 @@ static void ath_printtxbuf(const struct ath_buf *, int);
 
 static int	ieee80211_debug = 0;
 #ifdef AR_DEBUG
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,5,52))
-MODULE_PARM(ieee80211_debug, "i");
-#else
 module_param(ieee80211_debug, int, 0600);
-#endif
 MODULE_PARM_DESC(ieee80211_debug, "Load-time 802.11 debug output enable");
 #endif /* defined(AR_DEBUG) */
 
