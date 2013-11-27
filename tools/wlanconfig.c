@@ -776,7 +776,8 @@ list_keys(const char *ifname)
 	strcpy(cmd, "iwlist ");
 	strcat(cmd, ifname);
 	strcat(cmd, " key");
-	system(cmd);
+	if (system(cmd) != 0)
+		puts("Failed!");
 }
 
 #define	IEEE80211_C_BITS \
@@ -892,7 +893,8 @@ ieee80211_status(const char *ifname)
 	puts("[status not implemented (yet). Spawning iwconfig...]");
 	strcpy(cmd, "iwconfig ");
 	strcat(cmd, ifname);
-	system(cmd);
+	if (system(cmd) != 0)
+		puts("Failed!");
 }
 
 static int
