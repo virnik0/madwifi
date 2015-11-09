@@ -5,17 +5,18 @@ MADWIFI: Multimode Atheros Driver for WiFi on Linux
 
 Read the file COPYRIGHT for the complete copyright.
 
+* Re-based and patched to compile with latest kernel versions (3.x)
+  by Pavel Roskin <https://github.com/proski/madwifi>
 
-WARNING: THIS IS A BETA DISTRIBUTION.  THIS SOFTWARE HAS KNOWN PROBLEMS
-WARNING: AND LIMITATIONS THAT WILL BE CORRECTED BEFORE A PRODUCTION
-WARNING: RELEASE.  DON'T BLAME US IF THE SOFTWARE EATS YOUR SYSTEM,
-WARNING: DESTROYS YOUR DISK OR MAKES YOUR CORN-FLAKES SOGGY.
-WARNING: USE AT YOUR OWN RISK!
+* Re-hosted to https://github.com/virnik0/madwifi by Vojtech Weiss
+  due to need to have a source I can modify in order to re-introduce
+  the driver back to OpenWRT - as opensource driver can't handle
+  Atheros frames properly, regdomain is locked by default in ath5k,
+  and is unable to operate in Turbo mode.
 
 
 Introduction
 ------------
-
 This software contains a Linux kernel driver for Atheros-based Wireless
 LAN devices.  The driver supports station, AP, ad-hoc, and monitor modes
 of operation.  The Atheros driver depends on a device-independent
@@ -28,8 +29,8 @@ it.  Where the wireless extensions are lacking private ioctls have been
 added.
 
 There is only one driver included here; it supports PCI, MiniPCI and
-Cardbus devices - USB devices are currently not supported by this
-driver!  The driver can be built as a module or linked directly into the
+Cardbus devices - USB devices are not supported by this driver!  
+The driver can be built as a module or linked directly into the
 kernel.  Note however that the net80211 layer is device-independent;
 there is no reason it cannot be used with any 802.11 device (in fact
 this is the case on BSD systems).
@@ -63,9 +64,6 @@ for the specific FCC regulation.  Because the module is provided in a
 binary-only form it is marked "Proprietary"; this means when you load it
 you will see messages that your system is now "tainted".
 
-A detailed discussion of the pros and cons of this design can be found
-at http://madwifi-project.org/wiki/HAL
-
 If you wish to use this driver on a platform for which an ath_hal module
 is not already provided please contact the author.  Note that this is
 only necessary for new _architectures_; the HAL is not tied to any
@@ -89,13 +87,6 @@ including Cardbus cards from D-Link, Linksys, Netgear, Orinoco, Proxim,
 and 3Com; and mini-pci cards from some of these same vendors.  In
 addition, many laptop vendors use Atheros mini-pci cards for their
 built-in wireless support.
-
-For an up-to-date list of cards based on Atheros parts visit:
-http://customerproducts.atheros.com/customerproducts
-
-A list of products that have been reported to be supported by MadWifi
-can be found here:
-http://madwifi-project.org/wiki/Compatibility
 
 In general, if a device is identified as ``11a only'', it is almost
 certain to contain an Atheros 5210 part in it.  Most retail a+b products
@@ -256,10 +247,6 @@ every 1 second.  Running athstats without any options will display a
 summary of all non-zero statistics from the time the driver was loaded.
 By default the ath0 device is used; to override this use the -i option.
 
-A wiki page describes common MadWifi debugging methods here:
-http://madwifi-project.org/wiki/DevDocs/AthDebug
-
-
 Security/Crypto Support
 -----------------------
 
@@ -333,48 +320,7 @@ http://madwifi-project.org/report/1
 
 Getting Support
 ---------------
-
-User support is provided via the madwifi-users mailing list, which can
-be reached at:
-
-  madwifi-users@lists.sourceforge.net
-
-Contact this mailing list if you need help in getting your installation
-up and running.  We suggest that you subscribe to the list before
-sending your request (see below).
-
-We also offer an IRC channel that might be a better help in urgent
-cases.  Learn more about the different ways to get support by visiting:
-
-  http://madwifi-project.org/wiki/Support
-
-When sending a support request or problem report be sure to include the
-version of the driver and the part identification the driver prints to
-the console when the module is loaded.  For example:
-
-  ath_hal: 0.8.2.0
-  wlan: 0.7.0.0
-  ath_pci: 0.8.2.0
-  PCI: Found IRQ 11 for device 00:13.0
-  ath0: 11a rates: 6Mbps 9Mbps 12Mbps 18Mbps 24Mbps 36Mbps 48Mbps 54Mbps
-  ath0: 11b rates: 1Mbps 2Mbps 5.5Mbps 11Mbps
-  ath0: 802.11 address: 00:05:5d:6f:99:5f
-  ath0: Atheros 5211: mem=0xfebf0000, irq=11
-
-This says the HAL module is version 0.8.2, the wlan module is version
-0.7, the driver is version 0.8.2 and the hardware uses an Atheros 5211
-chip (which supports 11a and 11b modes).
-
-We will try to respond in a timely manner but understand this software
-is provided as-is, without any promise of support.
-
-
-Feedback and Contributions
---------------------------
-
-Reports about reproducible bugs, feature requests and patches should be
-submitted in the form of a trouble ticket:
-
-  http://madwifi-project.org/wiki/TicketSubmissionGuidelines
-        
-Fixes and enhancements are encouraged. 
+No support available. This reference driver is no longer maintained.
+Pavel Roskin did the re-base and necessary patching so the driver
+can be compiled against recent kernel (3.x), and he will do minimum
+maintenance of the same kind in the future (I hope so).
